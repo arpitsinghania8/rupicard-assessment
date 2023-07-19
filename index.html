@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Data Entry</title>
+</head>
+<body>
+    <h1>User Data Entry</h1>
+    <form id="userDataForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="mobile">Mobile Number:</label>
+        <input type="text" id="mobile" name="mobile" required><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        document.getElementById('userDataForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const mobile = document.getElementById('mobile').value;
+
+            const data = {
+                name: name,
+                mobile: mobile
+            };
+
+            const url = 'https://script.google.com/macros/s/AKfycbzqyUevkMyYJIi_Jz0dg02QV2XZeQhHZTdmrbmjvS6GhA4ZxTFqCO22xoEmekf0J8s/exec';
+
+            fetch(url, {
+                method: 'POST',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams(data).toString()
+            })
+            .then(response => {
+                console.log('Data recorded successfully!');
+                document.getElementById('userDataForm').reset();
+            })
+            .catch(error => {
+                console.error('Error recording data:', error);
+            });
+        });
+    </script>
+</body>
+</html>
